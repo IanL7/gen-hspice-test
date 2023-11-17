@@ -17,8 +17,7 @@ def main():
     
     args = parser.parse_args()
 
-    
-    print("* Example HSPICE testbench file (test.sp)")
+    print("* HSPICE testbench file (test.sp)")
     print("* transistor model")
     print(r'.INCLUDE "/cae/apps/data/asap7PDK-2022/asap7PDK_r1p7/models/hspice/7nm_TT_160803.pm')
     print("* Design Under Test (DUT)")
