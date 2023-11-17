@@ -6,7 +6,7 @@ exhaustively test the logic function (all cases of the truth table).
 
 # Running
 
-Run `python3 ght.py' followed by a set of arguments.
+Run `python3 ght.py` followed by a set of arguments.
 - The first argument is the DUT name
 - Any argument after the DUT name will be treated as
   input names (inputs to the DUT)
