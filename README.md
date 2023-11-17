@@ -4,7 +4,7 @@ A simple python script to generate hspice test contents for a logic
 function with provided inputs. The test contents generated will 
 exhaustively test the logic function (all cases of the truth table).
 
-# Running
+## Running
 
 Run `python3 ght.py` followed by a set of arguments.
 - The first argument is the DUT name
