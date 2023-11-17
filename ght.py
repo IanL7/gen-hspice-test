@@ -16,20 +16,18 @@ def main():
                         help='the names of the inputs to the logic function')  
     
     args = parser.parse_args()
+
     
     print("* Example HSPICE testbench file (test.sp)")
     print("* transistor model")
     print(r'.INCLUDE "/cae/apps/data/asap7PDK-2022/asap7PDK_r1p7/models/hspice/7nm_TT_160803.pm')
     print("* Design Under Test (DUT)")
-    print('.INCLUDE "neuron.sp" * Enable this line for schematic netlist')
-    print('*.INCLUDE "AND2.pex.netlist" * Enable this line for layout netlist')
+    print(f'.INCLUDE "{args.dut}.sp" * Enable this line for schematic netlist')
+    print(f'*.INCLUDE "{args.dut}.pex.netlist" * Enable this line for layout netlist')
     print('* Simulation Parameters')
     print('.TEMP 25.0')
     print('.options artist=2 ingold=2 parhier=local psf=2 hier_delim=0 accurate=1 NUMDGT=8 measdgt=5 GMINDC=1e-18 DELMAX=1n method=gear INGOLD=2 POST=1')
-    print('* Instantiate (DUT)')
-    print('* xdut gnd vdd in out INV')
-    print('* vdd0 vdd gnd 0.9v')
-    print(f'*x1 VSS VDD A B Cin Cout S {args.dut}')
+    print('')
     print("v1 vdd 0 0.9v")
     print("v2 vss 0 0v")
 
