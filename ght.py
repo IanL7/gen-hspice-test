@@ -8,7 +8,6 @@ def main():
     
     parser.add_argument('dut', 
                         type=str,
-                        required=True,
                         help='the name of the device under test (DUT)')  
     
     parser.add_argument('inputs', 
