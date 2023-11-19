@@ -7,9 +7,12 @@ exhaustively test the logic function (all cases of the truth table).
 ## Running
 
 Run `python3 ght.py` followed by a set of arguments.
-- The first argument is the DUT name
+- The first argument is the DUT name.
 - Any argument after the DUT name will be treated as
-  input names (inputs to the DUT)
+  input names (inputs to the DUT).
+- Add an optional `-t` flag followed by an integer to
+  specify how many ns to hold each truth table case for.
+  Default is 2ns.
 
 ## Example 
 
@@ -17,3 +20,4 @@ Run `python3 ght.py` followed by a set of arguments.
 - This will output the test contents to a file named test.sp
 - DUT name will be "adder"
 - Inputs will be "a", "b"
+
