@@ -11,8 +11,8 @@ Run `python3 ght.py` followed by a set of arguments.
 - Any argument after the DUT name will be treated as
   input names (inputs to the DUT).
 - Add an optional `-t` flag followed by an integer to
-  specify how many ns to hold each truth table case for.
-  Default is 2ns.
+  specify how many ns to hold each truth table case for - 
+  default is 2ns
 
 ## Example 
 
