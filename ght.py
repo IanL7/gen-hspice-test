@@ -8,7 +8,13 @@ def main():
     
     parser.add_argument('dut', 
                         type=str,
-                        help='the name of the device under test (DUT)')  
+                        help='the name of the device under test (DUT)') 
+
+    parser.add_argument('-t', 
+                    '--time',
+                    type=int,
+                    default=2,
+                    help='the length of time to hold each truth table case for (ns)') 
     
     parser.add_argument('inputs', 
                         type=str,
@@ -31,31 +37,31 @@ def main():
     print("v2 vss 0 0v")
 
     pattern = []
-    count_0 = (2 ** len(args.inputs))
-    count_1 = (2 ** len(args.inputs))
-    slope = 0
+    count_0 = (2 ** len(args.inputs)) * args.time // 2
+    count_1 = (2 ** len(args.inputs)) * args.time // 2
     for c in range(len(args.inputs)):
         sub_pattern = (list(repeat(0, count_0)) + list(repeat(1, count_1)))
-        sub_pattern = sub_pattern * (2*(2 ** len(args.inputs)) // len(sub_pattern))
+        sub_pattern = sub_pattern * (args.time * (2 ** len(args.inputs)) // len(sub_pattern))
         pattern.append(sub_pattern)
         count_0 = count_0 // 2
         count_1 = count_1 // 2
     
     p_c = 0
+    slope = 0
     for n, s in enumerate(args.inputs):
         print(f"v{n+3} {s} 0 pwl    ", end='')
 
         slope = 0
         for i, c in enumerate(pattern[n]):
             if c == 0:
-                if slope == 2:
+                if slope == args.time:
                     print(f"{i}ns {p_c}v", end=' ')
                     print(f"{i}.02ns 0v", end=' ')
                     slope = 0
                 else:
                     print(f"{i}ns 0v", end=' ')
             else:
-                if slope == 2:
+                if slope == args.time:
                     print(f"{i}ns {p_c}v", end=' ')
                     print(f"{i}.02ns 0.9v", end=' ')
                     slope = 0
@@ -67,7 +73,7 @@ def main():
         print("")
 
     print('.OP')
-    print(f'.tr 10p {(2**(len(args.inputs))*2)-1}ns')
+    print(f'.tr 10p {i}ns')
 
 if __name__ == "__main__":
     main()
