@@ -16,10 +16,19 @@ def main():
                     default=2,
                     help='the length of time to hold each truth table case for (ns)') 
     
-    parser.add_argument('inputs', 
+    parser.add_argument('-i', 
+                        '--inputs',
                         type=str,
                         nargs='+',
-                        help='the names of the inputs to the logic function')  
+                        help='the names of the inputs to the logic function',
+                        required=True)
+    
+    parser.add_argument('-o',
+                        '--outputs', 
+                        type=str,
+                        nargs='+', 
+                        help='the names of the outputs of the logic function', 
+                        required=True)
     
     args = parser.parse_args()
 
@@ -32,9 +41,11 @@ def main():
     print('* Simulation Parameters')
     print('.TEMP 25.0')
     print('.options artist=2 ingold=2 parhier=local psf=2 hier_delim=0 accurate=1 NUMDGT=8 measdgt=5 GMINDC=1e-18 DELMAX=1n method=gear INGOLD=2 POST=1')
-    print('')
-    print("v1 vdd 0 0.9v")
-    print("v2 vss 0 0v")
+    print('* Instantiate (DUT)')
+    print(f"xdut vss! vdd! {' '.join(args.inputs)} {' '.join(args.outputs)} {args.dut}")
+    print('.GLOBAL vss! vdd!')
+    print("v1 vdd! gnd 0 0.9v")
+    print("v2 vss! gnd 0 0v")
 
     pattern = []
     count_0 = (2 ** len(args.inputs)) * args.time // 2
@@ -49,7 +60,7 @@ def main():
     p_c = 0
     slope = 0
     for n, s in enumerate(args.inputs):
-        print(f"v{n+3} {s} 0 pwl    ", end='')
+        print(f"v{n+3} {s} gnd pwl    ", end='')
 
         slope = 0
         for i, c in enumerate(pattern[n]):
@@ -71,7 +82,7 @@ def main():
             p_c = 0 if c == 0 else 0.9
         
         print("")
-
+    
     print('.OP')
     print(f'.tr 10p {i}ns')
 
